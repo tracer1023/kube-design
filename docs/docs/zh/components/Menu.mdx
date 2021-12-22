@@ -14,6 +14,14 @@ order: 1
 
 在 Menu 组件中嵌套 MenuItem 组件。
 
+设置 width 属性可以设置 Menu 的宽度。
+
+设置 disabled 属性可以禁用 MenuItem。
+
+通过 OnClick 方法可以给 MenuItem 绑定事件。
+
+通过 as 属性可以修改组件类型，如变成 a 标签，可以给 MenuItem 添加跳转链接。
+
 ```js live=true
 () => {
   const { Add, Stop, Pen, Trash } = KubeIcon;
@@ -21,12 +29,12 @@ order: 1
      console.log('you click me')
   }
   return (
-    <Card style={{ width: '230px' }}>
-      <Menu>
+    <Card style={{ width: '400px' }}>
+      <Menu width={300}>
         <MenuLabel>menu label</MenuLabel>
         <MenuItem icon={<Add />} onClick={clickCallback}>创建</MenuItem>
-        <MenuItem icon={<Stop />}>停止调度</MenuItem>
-        <MenuItem icon={<Pen />}>Edit</MenuItem>
+        <MenuItem icon={<Stop />} disabled>停止调度</MenuItem>
+        <MenuItem icon={<Pen />} as="a" href="/login">Edit</MenuItem>
         <Divider />
         <MenuItem icon={<Trash />}>Delete</MenuItem>
       </Menu>
@@ -35,23 +43,4 @@ order: 1
 }
 ```
 
-## 禁用子菜单
-
-```js live=true
-() => {
-  const { Add, Stop, Pen, Trash } = KubeIcon;
-  return (
-     <Card style={{ width: '230px' }}>
-        <Menu>
-          <MenuLabel>menu label</MenuLabel>
-          <MenuItem disabled icon={<Add />}>Add</MenuItem>
-          <MenuItem icon={<Stop />}>Stop</MenuItem>
-          <MenuItem icon={<Pen />}>Edit</MenuItem>
-          <Divider />
-          <MenuItem icon={<Trash />}>Delete</MenuItem>
-        </Menu>
-      </Card>
-  )
-}
-```
 

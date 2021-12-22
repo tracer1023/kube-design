@@ -10,44 +10,91 @@ order: 1
 
 表单控件，用于创建一个实体或收集信息，需要对输入对数据类型进行校验时。
 
+基本的表单数据域控制展示，包含布局、初始化、验证、提交。
+
+From 组件通过 layout 属性来布局，可选值为 vertical / horizontal / inline .
+
+Form 组件与 FormItem 搭配使用。
+
+Form 组件通过 labelAlign 属性可以控制 label 的排列对齐方式。
+
+Form 组件通过 size 属性可以控制表格的尺寸。
+
+Form 组件通过 initialValue 可以设定表格的初始值。
+
+Form 组件通过 labelCol 和 wrapperCol 设定表格占据的宽度。
+
+FromItem 组件通过 rules 可以设定表单的校验规则。
+
 ```js live=true
 () => {
+  const [form] = useForm();
+  const [formLayout, setFormLayout] = React.useState('horizontal');
+  const onRadioChange = (val) => {
+    setFormLayout(val);
+  };
+  const getFieldData = () => {
+    console.log(form.validateFields());
+  };
+
   const onFinish = (values) => {
     console.log(values);
   };
+
+  const layoutCol = {
+     labelCol: { span: 8 },
+     wrapperCol: { span: 16 },
+   };
+
   return (
-    <Form onFinish={onFinish} initialValues={{ usename: 'wayne' }}>
-      <Row gutter={[10, 40]}>
-        <Col span={6}>
-          <FormItem
-            name="usename"
-            label="Username"
-            help="user name must input"
-            rules={[{ required: true, message: 'Please input your username!' }]}
-          >
-            <Input />
-          </FormItem>
-        </Col>
-        <Col span={6}>
-          <FormItem
-            name="uid"
-            label="用户名"
-            help="help content"
-            rules={[{ required: true, message: 'Please input your uid!' }]}
-          >
-            <Input />
-          </FormItem>
-        </Col>
-        <Col span={6}>
-          <FormItem name="group" label="Group" help="help content" tooltip="tooltip 内容 content">
-            <Input />
-          </FormItem>
-        </Col>
-      </Row>
-      <button type="submit">Submit</button>
-    </Form>
-  )
-}
+    <>
+      <RadioGroup onChange={onRadioChange} defaultValue={formLayout}>
+        <Radio label="horizontal" value="horizontal" />
+        <Radio label="vertical" value="vertical" />
+        <Radio label="inline" value="inline" />
+      </RadioGroup>
+      <Form
+        {...layoutCol}
+        layout={formLayout}
+        form={form}
+        size="lg"
+        labelAlign="left"
+        initialValues={{ account: 'wayne' }}
+        onFinish={onFinish}
+      >
+        <FormItem
+          name="account"
+          label="Account"
+          help="please enter your account"
+          rules={[{ required: true, message: 'Please input your account!' }]}
+          tooltip="please enter your account">
+        <Input />
+        </FormItem>
+        <FormItem
+          name="name"
+          label="Name"
+          help="please enter your name"
+          rules={[{ required: true, message: 'Please input your name!' }]}
+          tooltip="your name"
+        >
+          <Input placeholder="Name"/>
+        </FormItem>
+        <FormItem
+          name="password"
+          label="Password"
+          help="Password"
+          tooltip="please enter your password"
+          rules={[{ required: true, message: 'Please input your name!' }]}
+        >
+          <Input type="Password" placeholder="Password"/>
+        </FormItem>
+      </Form>
+      <Button onClick={getFieldData}>
+         Submit
+      </Button>
+    </>
+  );
+};
 ```
 
 ## 动态表单

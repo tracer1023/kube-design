@@ -10,6 +10,9 @@ import {
   Col,
   Button,
   useForm,
+  Radio,
+  RadioGroup,
+  FormLayout,
 } from '../index';
 
 export default {
@@ -110,5 +113,57 @@ export const DynamicForm = () => {
         Submit
       </button>
     </Form>
+  );
+};
+
+export const layout = () => {
+  const [form] = useForm();
+  const [formLayout, setFormLayout] = React.useState<FormLayout>('horizontal');
+  const onRadioChange = (val) => {
+    setFormLayout(val);
+  };
+  const getFieldData = () => {
+    console.log(form.validateFields());
+  };
+  const layoutCol = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  };
+
+  return (
+    <div>
+      <RadioGroup onChange={onRadioChange} defaultValue={formLayout}>
+        <Radio label="horizontal" value="horizontal" />
+        <Radio label="vertical" value="vertical" />
+        <Radio label="inline" value="inline" />
+      </RadioGroup>
+      <Form
+        {...layoutCol}
+        layout={formLayout}
+        form={form}
+        size="lg"
+        labelAlign="left"
+        initialValues={{ account: 'wayne' }}
+        onFinish={onFinish}
+      >
+        <FormItem name="account" label="Account" help="help content" tooltip="tooltip 内容 content">
+          <Input />
+        </FormItem>
+        <FormItem name="name" label="Name" help="help content" tooltip="tooltip 内容 content">
+          <Input />
+        </FormItem>
+        <FormItem
+          name="password"
+          label="Password"
+          help="help content"
+          tooltip="tooltip 内容 content"
+        >
+          <Input />
+        </FormItem>
+        <button type="button" onClick={getFieldData}>
+          Submit
+        </button>
+      </Form>
+    </div>
   );
 };

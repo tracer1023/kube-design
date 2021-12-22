@@ -10,44 +10,77 @@ order: 1
 
 Form controls are used to create an entity or collect information when the input data type needs to be verified.
 
+Basic Form data control. Includes layout, initial values, validation and submit.
+
 ```js live=true
 () => {
+  const [form] = useForm();
+  const [formLayout, setFormLayout] = React.useState('horizontal');
+  const onRadioChange = (val) => {
+    setFormLayout(val);
+  };
+  const getFieldData = () => {
+    console.log(form.validateFields());
+  };
+
   const onFinish = (values) => {
     console.log(values);
   };
+
+  const layoutCol = {
+     labelCol: { span: 8 },
+     wrapperCol: { span: 16 },
+   };
+
   return (
-    <Form onFinish={onFinish} initialValues={{ usename: 'wayne' }}>
-      <Row gutter={[10, 40]}>
-        <Col span={6}>
-          <FormItem
-            name="usename"
-            label="Username"
-            help="user name must input"
-            rules={[{ required: true, message: 'Please input your username!' }]}
-          >
-            <Input />
-          </FormItem>
-        </Col>
-        <Col span={6}>
-          <FormItem
-            name="uid"
-            label="username"
-            help="help content"
-            rules={[{ required: true, message: 'Please input your uid!' }]}
-          >
-            <Input />
-          </FormItem>
-        </Col>
-        <Col span={6}>
-          <FormItem name="group" label="Group" help="help content" tooltip="tooltip 内容 content">
-            <Input />
-          </FormItem>
-        </Col>
-      </Row>
-      <button type="submit">Submit</button>
-    </Form>
-  )
-}
+    <>
+      <RadioGroup onChange={onRadioChange} defaultValue={formLayout}>
+        <Radio label="horizontal" value="horizontal" />
+        <Radio label="vertical" value="vertical" />
+        <Radio label="inline" value="inline" />
+      </RadioGroup>
+      <Form
+        {...layoutCol}
+        layout={formLayout}
+        form={form}
+        size="lg"
+        labelAlign="left"
+        initialValues={{ account: 'wayne' }}
+        onFinish={onFinish}
+      >
+        <FormItem
+          name="account"
+          label="Account"
+          help="please enter your account"
+          rules={[{ required: true, message: 'Please input your account!' }]}
+          tooltip="please enter your account">
+        <Input />
+        </FormItem>
+        <FormItem
+          name="name"
+          label="Name"
+          help="please enter your name"
+          rules={[{ required: true, message: 'Please input your name!' }]}
+          tooltip="your name"
+        >
+          <Input placeholder="Name"/>
+        </FormItem>
+        <FormItem
+          name="password"
+          label="Password"
+          help="Password"
+          tooltip="please enter your password"
+          rules={[{ required: true, message: 'Please input your name!' }]}
+        >
+          <Input type="Password" placeholder="Password"/>
+        </FormItem>
+      </Form>
+      <Button onClick={getFieldData}>
+         Submit
+      </Button>
+    </>
+  );
+};
 ```
 
 ## Dynamic Form
