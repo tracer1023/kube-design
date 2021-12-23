@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Tabs, Tab } from '@kubed/components';
 import * as Kubed from '@kubed/components';
 import * as KubeIcon from '@kubed/icons';
+import * as KubeHook from '@kubed/hooks';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getMdxData } from '../../lib/getMdx';
 import { DocLayout } from '../../lib/layouts/DocLayout';
@@ -17,6 +18,7 @@ const Pre = ({ children }: React.PropsWithChildren<any>) => <>{children}</>;
 
 const components = {
   ...Kubed,
+  ...KubeHook,
   KubeIcon,
   pre: Pre,
   code: CodeBox,

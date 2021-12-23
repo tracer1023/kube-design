@@ -1,0 +1,111 @@
+---
+group: 'hooks'
+category: 'state'
+title: useClickOutside
+description: '检测指定元素外的点击和触摸事件'
+order: 1
+---
+
+## 使用方法
+
+```js live=true
+() => {
+  const [opened, setOpened] = React.useState(false);
+  const ref = useClickOutside(() => setOpened(false));
+  return (
+    <>
+       <Button color="primary" onClick={() => setOpened(true)}>Open dropdown</Button>
+       {opened && (
+         <Card ref={ref} shadow="sm">
+           <span>Click outside to close</span>
+         </Card>
+       )}
+    </>
+  );
+}
+```
+
+## API
+
+Hook 接受三个参数：
+
+- handler: 在外部点击时调用的函数。
+
+- events: 指示外部点击的可选事件列表。
+
+- nodes: 不可以在点击事件之外触发的可选节点列表。
+
+Hook 返回 React ref 对象，该对象应传递给被捕获的外部点击的元素。
+
+```tsx
+function Example() {
+  const handleClickOutside = () => console.log('Clicked outside of div');
+  const ref = useClickOutside(handleClickOutside);
+  return <div ref={ref} />;
+}
+```
+
+## 更改事件
+
+默认情况下使用 useClickOutside 监听 mousedown 和 touchstart 事件，您可以通过将事件数组作为第二个参数传递来更改这些事件。
+
+```js live=true
+() => {
+  const [opened, setOpened] = React.useState(false);
+  const ref = useClickOutside(() => setOpened(false), ['mouseup', 'touchend']);
+
+  return (
+    <>
+      <Button color="primary" onClick={() => setOpened(true)}>Open dropdown</Button>
+
+      {opened && (
+        <Card ref={ref} shadow="sm">
+          <span>Click outside to close</span>
+        </Card>
+      )}
+    </>
+  );
+}
+```
+
+## 多个节点
+
+在某些情况下你希望为多个节点触发外部点击事件，比如，当门户网站当下拉列表渲染时。因此提供第三个参数，这个参数是一个数组，包含不应该触发外部点击事件。
+
+```tsx
+function Demo() {
+  const [dropdown, setDropdown] = useState(null);
+  const [control, setControl] = useState(null);
+
+  useClickOutside(() => console.log('outside'), null, [control, dropdown]);
+
+  return (
+    <div>
+      <div ref={setControl}>Control</div>
+      <div>
+        <div ref={setDropdown}>Dropdown</div>
+      </Portal>
+    </div>
+  );
+}
+```
+
+## TypeScript
+
+## 定义
+
+```ts
+function useClickOutside<T extends HTMLElement = any>(
+  handler: () => void,
+  events?: string[] | null,
+  nodes?: HTMLElement[]
+): React.MutableRefObject<T>;
+```
+
+## Ref type
+
+默认情况下 useClickOutside 会返回带有 React.MutableRefObject<any> 类型的 ref 对象，因为 ref 类型在几乎所有情况下都无关紧要。您可以通过传递类型来指定 ref 类型。
+
+```tsx
+const ref = useClickOutside<HTMLDivElement>(onClickOutside);
+```

@@ -63,15 +63,15 @@ export default {
   hooks: [
     {
       title: 'State Management',
-      menu: ['useId', 'useInterval', 'useToggle'],
+      menu: ['useId', 'useForceUpdate', 'useDebouncedValue', '', 'useInterval', 'useToggle'],
     },
     {
       title: 'UI and Dom',
-      menu: ['useClickOutside', 'useScrollLock'],
+      menu: ['useClickOutside', 'useMove', 'useQueue', 'useMediaQuery', 'useScrollLock'],
     },
     {
       title: 'Others',
-      menu: ['useClipboard', 'useWindowScroll', 'useDidUpdate', 'useForceUpdate'],
+      menu: ['useClipboard', 'useWindowScroll', 'useDidMount', 'useDidUpdate', 'useForceUpdate'],
     },
   ],
 };
