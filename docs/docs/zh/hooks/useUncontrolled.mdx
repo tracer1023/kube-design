@@ -1,0 +1,89 @@
+---
+group: 'hooks'
+category: 'state'
+title: useUncontrolled
+description: '管理受控和非受控组件的状态'
+order: 1
+---
+
+## 使用方法
+
+Hook 允许您管理受控和非受控组件的状态。
+
+```js live=true
+function YourInput({ value, defaultValue, onChange }) {
+  const [_value, handleChange] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: 'Final',
+    rule: (val) => typeof val === 'string',
+    onChange,
+  });
+
+  return (
+    <input
+      type="text"
+      value={_value}
+      onChange={(event) => handleChange(event.currentTarget.value)}
+    />
+  );
+}
+```
+
+在上面的例子中，规则函数用于确定最初应该使用的值
+
+```tsx
+// defaultValue and finalValue are ignored for controlled components
+// _value === 'Hello'
+<YourInput value="Hello" defaultValue="There" onChange={() => {}} />
+
+// Since value prop does not meet requirements default value will be used instead
+// _value === 'There'
+<YourInput value={null} defaultValue="There" />
+
+// When both value and defaultValue fail to meet requirements, finalValue will be used
+// _value === 'Final'
+<YourInput value={null} defaultValue={null} />
+```
+
+现在您可以将您的组件用作受控和非受控输入。
+
+```tsx
+// Uncontrolled
+<YourInput />
+<YourInput defaultValue="hello" />
+<YourInput onChange={() => {}} /> // still possible since value is stored in internal state
+
+// Controlled
+<YourInput value="Hello" onChange={() => {}} />
+```
+
+## TypeScript
+
+## 设置值类型
+
+默认情况下，hook会自动设置类型，但您可以提供自己的类型
+
+```tsx
+useUncontrolled<number>({
+  value: 10,
+  defaultValue: 5,
+  finalValue: 20,
+  rule: (val) => val >= 10,
+  onChange: (val) => console.log(val > 10),
+});
+```
+
+## 定义
+
+```tsx
+function useUncontrolled<T>(configuration: {
+  value: T;
+  defaultValue: T;
+  finalValue: T;
+  onChange(value: T): void;
+  onValueUpdate?(value: T): void;
+  rule: (value: T) => boolean;
+}): readonly [T, (val: T) => void, 'controlled' | 'uncontrolled'];
+```
+
