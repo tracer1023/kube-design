@@ -1,0 +1,50 @@
+---
+group: 'hooks'
+category: 'state'
+title: useId
+description: '生成记忆的随机 id'
+order: 1
+---
+
+## 使用方法
+
+useId 在寻软是生成持续存在的 ID。这个 hook 通常用于绑定 input 元素到 label 上。
+
+生成到随机 id 会被保存到 ref 上并且不会改变，除非组件被卸载。
+
+
+```jsx
+import { useId } from '@kubed/hooks';
+
+function Input({ id }) {
+  const uuid = useId(id);
+
+  return (
+    <>
+      <label htmlFor={uuid}>Input label</label>
+      <input type="text" id={uuid} />
+    </>
+  );
+}
+
+// input and label will have id 'my-id'
+const withId = <Input id="my-id" />;
+
+// input and label will have random id 'kubed-fZMoF'
+const withoutId = <Input />;
+```
+
+## API
+
+useId 这个 Hook 接受两个参数：
+
+- id : 默认返回字符串值。
+- generateId - 用于生成随机数的方法。
+
+UseId 这个 Hook 会返回字符串值，这个值是传入的 id(如果传了第一个参数) 或者是使用 generateId 函数生成的随机 id。
+
+## 定义
+
+```tsx
+function useId(id: string, generateId?: () => string): string;
+```
