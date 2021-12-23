@@ -1,0 +1,99 @@
+---
+group: 'hooks'
+category: 'state'
+title: useDebouncedValue
+description: 'Debounce value changes'
+order: 1
+---
+
+## Usage
+
+Use hook to debounce value change. This can be useful in case you want to perform a heavy operation based on react state, for example, send search request.
+
+```js live=true
+() => {
+  const [value, setValue] = React.useState('');
+  const [debounced] = useDebouncedValue(value, 200);
+
+  return (
+    <>
+      <Input
+        label="Enter value to see debounce"
+        value={value}
+        style={{ flex: 1 }}
+        onChange={(event) => setValue(event.currentTarget.value)}
+      />
+
+      <Text>Value: {value}</Text>
+      <Text>Debounced value: {debounced}</Text>
+    </>
+  );
+}
+```
+
+## Leading update
+
+You can remove immediately update value with first call with { leading: true } options:
+
+```js live=true
+()  => {
+  const [value, setValue] = React.useState('');
+  const [debounced] = useDebouncedValue(value, 200, { leading: true });
+
+  return (
+    <>
+      <Input
+        label="Enter value to see debounce"
+        value={value}
+        style={{ flex: 1 }}
+        onChange={(event) => setValue(event.currentTarget.value)}
+      />
+
+      <Text>Value: {value}</Text>
+      <Text>Debounced value: {debounced}</Text>
+    </>
+  );
+}
+```
+
+## Cancel update
+
+Hook provides cancel callback, you can use it to cancel update. Update cancels automatically on component unmount.
+
+In this example, type in some text and click cancel button within a minute to cancel debounced value change
+
+```js live=true
+() => {
+  const [value, setValue] = React.useState('');
+  const [debounced, cancel] = useDebouncedValue(value, 1000);
+
+  return (
+    <>
+      <Input
+        label="Enter value to see debounce"
+        value={value}
+        style={{ flex: 1 }}
+        onChange={(event) => setValue(event.currentTarget.value)}
+      />
+      <Button onClick={cancel} size="xs" style={{ marginLeft: 15 }}>
+        Cancel
+      </Button>
+
+      <Text>Value: {value}</Text>
+      <Text>Debounced value: {debounced}</Text>
+    </>
+  );
+}
+```
+
+## Definition
+
+```tsx
+function useDebouncedValue<T = any>(
+  value: T,
+  wait: number,
+  options?: {
+    leading: boolean;
+  }
+): readonly [T, () => void];
+```

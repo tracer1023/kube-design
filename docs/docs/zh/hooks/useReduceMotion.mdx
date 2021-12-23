@@ -1,0 +1,30 @@
+---
+group: 'hooks'
+category: 'state'
+title: useReduceMotion
+description: '检测用户是否喜欢减少运动'
+order: 1
+---
+
+## Usage
+
+
+useReducedMotion 检测用户是否喜欢减少运动。它在引擎盖下使用 useMediaQuery 钩子。 Hook 依赖于 window.matchMedia() API，如果 api 不可用（例如在服务器端渲染期间），它将始终返回 false。
+
+使用钩子检测用户是否喜欢减少运动（（prefers-reduced-motion：reduce）媒体查询）并根据此值设置动画持续时间。默认情况下，所有使用动画的 Kube Design 组件都支持它：
+
+```js live=true
+() => {
+  const reduceMotion = useReducedMotion();
+
+  return (
+     <Badge
+       color={reduceMotion ? 'red' : 'blue'}
+       style={{ transitionDuration: reduceMotion ? '0ms' : '200ms' }}
+       variant="filled"
+     >
+       {reduceMotion ? 'You prefer to reduce motion' : 'You prefer not to reduce motion'}
+     </Badge>
+  );
+}
+```

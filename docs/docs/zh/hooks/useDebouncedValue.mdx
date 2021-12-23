@@ -1,0 +1,99 @@
+---
+group: 'hooks'
+category: 'state'
+title: useDebouncedValue
+description: '防抖'
+order: 1
+---
+
+## Usage
+
+使用 Hook 对 value 进行防抖。如果您想根据反应状态执行繁重的操作，例如发送搜索请求，这会很有用
+
+```js live=true
+() => {
+  const [value, setValue] = React.useState('');
+  const [debounced] = useDebouncedValue(value, 200);
+
+  return (
+    <>
+      <Input
+        label="Enter value to see debounce"
+        value={value}
+        style={{ flex: 1 }}
+        onChange={(event) => setValue(event.currentTarget.value)}
+      />
+
+      <Text>Value: {value}</Text>
+      <Text>Debounced value: {debounced}</Text>
+    </>
+  );
+}
+```
+
+## 立即更新
+
+您可以使用 {leading: true } 选项在第一次调用时立即删除更新值。
+
+```js live=true
+()  => {
+  const [value, setValue] = React.useState('');
+  const [debounced] = useDebouncedValue(value, 200, { leading: true });
+
+  return (
+    <>
+      <Input
+        label="Enter value to see debounce"
+        value={value}
+        style={{ flex: 1 }}
+        onChange={(event) => setValue(event.currentTarget.value)}
+      />
+
+      <Text>Value: {value}</Text>
+      <Text>Debounced value: {debounced}</Text>
+    </>
+  );
+}
+```
+
+## 取消更新
+
+Hook 提供取消回调，您可以使用它来取消更新。更新在组件卸载时自动取消。
+
+在此示例中，输入一些文本并在一分钟内单击取消按钮以取消防抖值更改
+
+```js live=true
+() => {
+  const [value, setValue] = React.useState('');
+  const [debounced, cancel] = useDebouncedValue(value, 1000);
+
+  return (
+    <>
+      <Input
+        label="Enter value to see debounce"
+        value={value}
+        style={{ flex: 1 }}
+        onChange={(event) => setValue(event.currentTarget.value)}
+      />
+      <Button onClick={cancel} size="xs" style={{ marginLeft: 15 }}>
+        Cancel
+      </Button>
+
+      <Text>Value: {value}</Text>
+      <Text>Debounced value: {debounced}</Text>
+    </>
+  );
+}
+```
+
+## 定义
+
+```tsx
+function useDebouncedValue<T = any>(
+  value: T,
+  wait: number,
+  options?: {
+    leading: boolean;
+  }
+): readonly [T, () => void];
+```

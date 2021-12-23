@@ -1,0 +1,62 @@
+---
+group: 'hooks'
+category: 'state'
+title: useToggle
+description: '两个状态之间切换'
+order: 1
+---
+
+## 使用方法
+
+Hook 实现了通用状态模式--它在两个给定值之间切换状态。
+
+```js live=true
+() => {
+  const [value, toggle] = useToggle('blue', ['blue', 'orange']);
+  return (
+    <Button color={value} onClick={() => toggle()}>
+      {value}
+    </Button>
+  );
+}
+```
+
+## API
+
+Hook 接受两个参数：
+
+- initialValue：初始值
+
+- options –一个数组包含两个元素，必须包含初始值。
+
+Hook 返回一个包含状态值和触发函数的数组。
+
+```tsx
+const [value, toggle] = useToggle('dark', ['light', 'dark']);
+
+toggle(); // -> value == 'light'
+toggle(); // -> value == 'dark'
+
+// You can force specific value, in this case state will be set to given value
+toggle('dark'); // -> value == 'dark'
+```
+## TypeScript
+
+## 设置类型
+
+By default TypeScript will guess your type, but in most cases it's better to set type manually:
+
+```tsx
+const [value, toggle] = useToggle('dark', ['light', 'dark']); // value is string
+const [value, toggle] = useToggle<'dark' | 'light'>('dark', ['light', 'dark']); // value is 'dark' | 'light'
+```
+
+## 定义
+
+```tsx
+function useToggle<T>(
+  initialValue: T,
+  options: [T, T]
+): readonly [T, (value?: React.SetStateAction<T>) => void];
+```
+
