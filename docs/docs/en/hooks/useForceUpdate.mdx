@@ -1,0 +1,29 @@
+---
+group: 'hooks'
+category: 'state'
+title: useForceUpdate
+description: 'Force component to render without state change'
+order: 1
+---
+
+## Usage
+
+Hook returns a function, when this function is called component rerenders:
+
+```js live=true
+() => {
+  const forceUpdate = useForceUpdate();
+  return (
+     <Group position="center">
+       <Text>{randomId()}</Text>
+       <Button onClick={forceUpdate}>Force update</Button>
+     </Group>
+  );
+}
+```
+
+## Definition
+
+```tsx
+function useForceUpdate(): () => void;
+```

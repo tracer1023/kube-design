@@ -1,0 +1,29 @@
+---
+group: 'hooks'
+category: 'state'
+title: useForceUpdate
+description: '强制组件渲染而不改变状态'
+order: 1
+---
+
+## 使用方法
+
+Hook 返回一个函数，当这个函数被调用时组件重新渲染：
+
+```js live=true
+() => {
+  const forceUpdate = useForceUpdate();
+  return (
+     <Group position="center">
+       <Text>{randomId()}</Text>
+       <Button onClick={forceUpdate}>Force update</Button>
+     </Group>
+  );
+}
+```
+
+## 定义
+
+```tsx
+function useForceUpdate(): () => void;
+```
