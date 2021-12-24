@@ -1,0 +1,43 @@
+---
+group: 'hooks'
+category: 'state'
+title: useScrollLock
+description: 'Lock scroll at current position'
+order: 1
+---
+
+## Usage
+
+useScrollLock locks scroll at current position by setting document.body overflow to hidden.
+
+```ts live=true
+() => {
+  const { Unlock, Lock } = KubeIcon;
+  const [scrollLocked, setScrollLocked] = useScrollLock();
+
+  return (
+    <Center>
+      <Button
+        onClick={() => setScrollLocked((c) => !c)}
+        variant="outline"
+        leftIcon={scrollLocked ? <Unlock /> : <Lock />}
+      >
+        {scrollLocked ? 'Unlock scroll' : 'Lock scroll'}
+      </Button>
+    </Center>
+  );
+}
+```
+
+## Scrollbars offset
+
+In some operation systems scrollbars have width To offset that width use-scroll-lock adds padding-right equal to scrollbar width to body element when scroll is locked. However if you use elements with fixed position you will need to add right padding manually: padding-right: var(--removed-scroll-width, 0px)).
+
+## Definition
+
+```ts
+function useScrollLock<T extends HTMLElement = HTMLDivElement>(
+  lock?: boolean,
+  options?: { disableBodyPadding?: boolean }
+): readonly [boolean, Dispatch<SetStateAction<boolean>>];
+```
