@@ -11,7 +11,7 @@ export { useClipboard } from './useClipboard';
 export { useQueue } from './useQueue';
 export { useClickOutside } from './useClickOutside';
 export { useMove } from './useMove';
-export { useHotkeys } from './useHotkeys';
+export { useHotkeys, getHotkeyHandler } from './useHotkeys';
 export { useMergedRef, mergeRefs } from './useMergedRef';
 export { useDebouncedValue } from './useDebouncedValue';
 export { useDidMount } from './useDidMount';

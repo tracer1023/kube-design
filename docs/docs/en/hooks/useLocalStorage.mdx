@@ -1,0 +1,76 @@
+---
+group: 'hooks'
+category: 'state'
+title: useLocalStorage
+description: 'Use localStorage value as react state, sync state across opened tabs'
+order: 1
+---
+
+## Usage
+
+useLocalStorage allows you to use value from localStorage as react state. Hook works exactly the same as useState, but also writes value to local storage.
+
+```js
+import { useLocalStorageValue } from '@mantine/hooks';
+
+// hook will read value from localStorage.getItem('color-scheme')
+// if localStorage is not available or value at given key does not exist
+// 'dark' will be assigned to value variable
+const [value, setValue] = useLocalStorageValue({ key: 'color-scheme', defaultValue: 'dark' });
+
+// Value is set both to state and localStorage at 'color-scheme'
+setValue('light');
+
+// You can also use callback like in useState hook to set value
+setValue((current) => (current === 'dark' ? 'light' : 'dark'));
+```
+
+## Example
+
+```js live=true
+() => {
+  const [colorType, setColorType] = useLocalStorage({
+    key: 'color-type',
+    defaultValue: 'primary'
+  })
+
+  const toggleColorChange = () =>
+    setColorType((current) => ( current === 'primary' ? 'success' : 'primary'))
+
+  return (
+     <Button
+       onClick={toggleColorChange}
+       variant="filled"
+       color={colorType === 'primary'? 'primary': 'secondary'}
+     >
+        { colorType === 'primary'? 'primary' : 'secondary'}
+     </Button>
+  )
+}
+```
+
+## Browser tabs synchronization
+
+useLocalStorage subscribes to storage event. When state changes in one tab it automatically updates value in all other opened browser tabs.
+
+## Definition
+
+```ts
+function useLocalStorageValue<T extends string>(options: {
+  key: string;
+  defaultValue?: T;
+}): [T, (val: T | ((prevState: T) => T)) => void];
+```
+
+## Set value type
+
+You can specify value type same as in useState hook, type must extend string:
+
+```ts
+type ColorType = 'primary' | 'secondary';
+
+const [value, setValue] = useLocalstorage<ColorType>({
+  key: 'color-type',
+  defaultValue: 'primary',
+})
+```

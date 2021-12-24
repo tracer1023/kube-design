@@ -1,0 +1,111 @@
+---
+group: 'hooks'
+category: 'state'
+title: unQueue
+description: '如果超过当前限制，则将数据添加到队列'
+order: 1
+---
+
+## 使用方法
+
+当您需要限制当前状态下的数据量并将其余数据放入队列时，请使用此Hook。
+
+```tsx
+const { state, queue, add, update, cleanQueue } = useQueue({
+  initialValues: [1],
+  limit: 3,
+});
+
+// state -> [1], queue -> []
+
+// When state.length is less that limit, new items are added to state
+add(2);
+// state -> [1,2], queue -> []
+
+// When state.length is equal to limit, new items are added to queue
+add(3, 4, 5, 6);
+// state -> [1,2], queue -> [3,4,5,6]
+
+// Use update function to modify items
+update((values) => values.map((item) => item * 3));
+// state -> [3,6], queue -> [9,12,15,18]
+
+// If you add or remove items in update function,
+// they will be divided between queue and state according to limit
+// order is always preserved
+update((values) => values.filter((item) => item % 2));
+// state -> [3,9], queue -> [15]
+
+// Remove all items from queue
+cleanQueue();
+// state -> [3,9], queue -> []
+
+// Remove all items from queue and state
+update(() => []);
+// state -> [], queue -> []
+```
+
+## API
+
+Hook 接受单个参数 - 带键的配置对象：
+
+initialValues – 可选的初始值（根据限制在状态和队列之间划分），默认为空数组限制 - 状态可以包含的最大项目数，超出限制后的每个下一个项目都放入队列
+
+返回值:
+
+state – 当前状态
+queue – 当前队列
+add – 将任意数量的项目添加到状态或队列
+update – 将给定的函数应用于状态和队列中的所有项目，使用它来过滤、修改或添加项目。
+cleanQueue – 从队列中删除所有项目。
+
+## TypeScript
+
+默认情况下，钩子会自动从 initialValues 获取类型信息。
+
+```tsx
+const q = useQueue({
+  limit: 2,
+  initialValues: [
+    { name: 'Bob', id: 1 },
+    { name: 'Alice', id: 2 },
+  ],
+});
+
+typeof q.state[number]; // -> { name: string; id: number; }
+```
+
+如果您不提供初始值，请传入状态项的类型
+
+```tsx
+const q = useQueue<{ name: string; id: number }>({
+  limit: 2,
+  initialValues: [],
+});
+
+q.add({ name: 'Bob', id: 1 });
+```
+
+## 定义
+
+```tsx
+function useQueue<T>(configuration: { initialValues?: T[]; limit: number }): {
+  state: T[];
+  queue: T[];
+  add: (...items: T[]) => void;
+  update: (fn: (state: T[]) => T[]) => void;
+  cleanQueue: () => void;
+};
+```
+
+## 元素类型
+
+元素类型根据initialValues自动设置，如果您没有initialValue则需要传入元素类型
+
+```tsx
+// ok -> typeof state[number] -> string
+const { state } = useQueue({ initialValues: ['1', '2', '3'], limit: 3 });
+
+// type cannot be assigned automatically, specify it
+const { state } = useQueue<string>({ limit: 3 });
+```
