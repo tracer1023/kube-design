@@ -1,0 +1,35 @@
+---
+group: 'hooks'
+category: 'state'
+title: useDidUpdate
+description: 'Call function in useEffect when value changes, but not when component mounts'
+order: 1
+---
+
+## Usage
+
+When component mounts useEffect hook is called. This is fine in most cases but if you need to track value changes and not component mount you will need to implement something like this to prevent useEffect call on mount.
+
+```js
+const mounted = useRef(false);
+
+useEffect(() => {
+  if (mounted.current) {
+    fn();
+  } else {
+    mounted.current = true;
+  }
+}, dependencies);
+```
+
+useDidUpdate uses the same logic
+
+```js
+useDidUpdate(() => console.log("Won't be called when mounted"), [value]);
+```
+
+## Definition
+
+```js
+function useDidUpdate(fn: () => void, dependencies?: any[]): void;
+```

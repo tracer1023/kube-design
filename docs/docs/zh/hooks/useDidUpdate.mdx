@@ -1,0 +1,35 @@
+---
+group: 'hooks'
+category: 'state'
+title: useDidUpdate
+description: '当值改变时调用 useEffect 中的函数，但在组件挂载时不调用.'
+order: 1
+---
+
+## 基本用法
+
+当组件挂载 useEffect 钩子时会被调用。在大多数情况下这很好，但是如果您需要跟踪值更改而不是组件挂载，您将需要实现类似的东西来防止 useEffect 在挂载时调用。
+
+```js
+const mounted = useRef(false);
+
+useEffect(() => {
+  if (mounted.current) {
+    fn();
+  } else {
+    mounted.current = true;
+  }
+}, dependencies);
+```
+
+useDidUpdate 使用相同的逻辑。
+
+```js
+useDidUpdate(() => console.log("Won't be called when mounted"), [value]);
+```
+
+## 定义
+
+```js
+function useDidUpdate(fn: () => void, dependencies?: any[]): void;
+```
