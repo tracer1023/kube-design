@@ -1,0 +1,57 @@
+---
+group: 'hooks'
+category: 'state'
+title: useWindowEvent
+description: 'Adds event listener to window on component mount and removes it on unmount'
+order: 1
+---
+
+## Usage
+
+useWindowEvent adds event listener to window object on component mount and removes it on unmount:
+
+```tsx
+const handler = (event) => console.log(event);
+
+// regular way
+useEffect(() => {
+  window.addEventListener('keydown', handler);
+  return () => window.removeEventListener('keydown');
+}, []);
+
+// with use-window-event hook
+useWindowEvent('keydown', handler);
+```
+
+## Example
+
+Search focus with ⌘ + K on mac or Ctrl + K on windows and linux on Mantine docs website.
+
+```tsx
+function Search() {
+  const inputRef = useRef();
+
+  useWindowEvent('keydown', (event) => {
+    if (event.code === 'KeyK' && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault();
+      inputRef.current.focus();
+    }
+  });
+
+  return <input ref={inputRef} />;
+}
+```
+
+## Definition
+
+Hook has exact same definition as window.addEventListener function:
+
+```tsx
+function useWindowEvent<K extends keyof WindowEventMap>(
+  type: K,
+  listener: (this: Window, ev: WindowEventMap[K]) => any,
+  options?: boolean | AddEventListenerOptions
+): void;
+```
+
+
