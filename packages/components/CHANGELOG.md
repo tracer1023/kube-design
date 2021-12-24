@@ -1,5 +1,29 @@
 # @kubed/components
 
+## 0.0.29
+
+### Patch Changes
+
+- [`d589bc9`](https://github.com/kubesphere/kube-design/commit/d589bc9b5a8d42390fc1a2f494ccb4b5bda34bd9) Thanks [@chenz24](https://github.com/chenz24)! - 1. fix: Fix AutoComplete 'omit' import bug.
+  2. refactor: Improve Slider.
+- Updated dependencies [[`d589bc9`](https://github.com/kubesphere/kube-design/commit/d589bc9b5a8d42390fc1a2f494ccb4b5bda34bd9)]:
+  - @kubed/hooks@0.0.9
+
+## 0.0.28
+
+### Patch Changes
+
+- [`c0bc991`](https://github.com/kubesphere/kube-design/commit/c0bc99120b1c597599383d360eef0add10d054c9) Thanks [@chenz24](https://github.com/chenz24)! - 1. fix: Fix changeset/action version warning.
+  2. refactor: Field support percentage width.
+  3. refactor: Entity support setting border.
+
+## 0.0.27
+
+### Patch Changes
+
+- Updated dependencies [[`7f2e134`](https://github.com/kubesphere/kube-design/commit/7f2e134aaff15b0552889f02ca0ae929848877d4)]:
+  - @kubed/hooks@0.0.8
+
 ## 0.0.26
 
 ### Patch Changes
