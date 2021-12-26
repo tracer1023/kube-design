@@ -67,6 +67,7 @@ export default {
       menu: [
         'useId',
         'useHotKeys',
+        'useMergedRef',
         'useLocalStorage',
         'useDebouncedValue',
         'useToggle',
@@ -87,7 +88,14 @@ export default {
     },
     {
       title: 'Others',
-      menu: ['useClipboard', 'useUnmount', 'useDidMount', 'useDidUpdate', 'useForceUpdate'],
+      menu: [
+        'useClipboard',
+        'usePrevious',
+        'useUnmount',
+        'useDidMount',
+        'useDidUpdate',
+        'useForceUpdate',
+      ],
     },
   ],
 };
