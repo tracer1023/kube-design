@@ -8,14 +8,12 @@ order: 1
 
 ## 使用方法
 
-useId 在寻软是生成持续存在的 ID。这个 hook 通常用于绑定 input 元素到 label 上。
+useId 在渲染时生成持续存在的 ID。这个 hook 通常用于绑定 input 元素到 label 上。
 
 生成到随机 id 会被保存到 ref 上并且不会改变，除非组件被卸载。
 
 
 ```jsx
-import { useId } from '@kubed/hooks';
-
 function Input({ id }) {
   const uuid = useId(id);
 

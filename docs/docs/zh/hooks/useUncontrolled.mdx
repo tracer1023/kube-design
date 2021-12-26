@@ -8,7 +8,7 @@ order: 1
 
 ## 使用方法
 
-Hook 允许您管理受控和非受控组件的状态。
+useUncontrolled Hook 允许您管理受控和非受控组件的状态。
 
 ```js live=true
 function YourInput({ value, defaultValue, onChange }) {
@@ -21,7 +21,7 @@ function YourInput({ value, defaultValue, onChange }) {
   });
 
   return (
-    <input
+    <Input
       type="text"
       value={_value}
       onChange={(event) => handleChange(event.currentTarget.value)}
@@ -30,7 +30,7 @@ function YourInput({ value, defaultValue, onChange }) {
 }
 ```
 
-在上面的例子中，规则函数用于确定最初应该使用的值
+在上面的例子中，规则函数用于确定最初应该使用的值。
 
 ```tsx
 // defaultValue and finalValue are ignored for controlled components
@@ -62,7 +62,7 @@ function YourInput({ value, defaultValue, onChange }) {
 
 ## 设置值类型
 
-默认情况下，hook会自动设置类型，但您可以提供自己的类型
+默认情况下，useUncontrolled hook会自动设置类型，但您可以提供自己的类型
 
 ```tsx
 useUncontrolled<number>({

@@ -31,7 +31,7 @@ useScrollLock 通过将 document.body 溢出设置为隐藏来锁定当前位置
 
 ## 滚动条偏移
 
-在某些操作系统中，滚动条具有宽度以抵消该宽度，当滚动被锁定时，使用-scroll-lock 将等于滚动条宽度的 padding-right 添加到 body 元素。但是，如果您使用具有固定位置的元素，则需要手动添加右填充：padding-right: var(--removed-scroll-width, 0px))。
+在某些操作系统中，当滚动被锁定时，useScrollLock 添加 padding-right 到 body 元素等于滚动条宽度，而导航栏有宽度可以抵销。但是，如果您使用具有固定位置的元素，则需要手动添加右填充：padding-right: var(--removed-scroll-width, 0px))。
 
 ## 定义
 
