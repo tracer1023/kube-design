@@ -8,7 +8,7 @@ order: 1
 
 ## 使用方法
 
-当组件挂载 useEffect 钩子时会被调用。在大多数情况下这很好，但是如果您需要跟踪值更改而不是组件挂载，您将需要实现类似的东西来防止 useEffect 在挂载时调用。
+当组件挂载 useEffect 钩子时会被调用。但是当您需要跟踪值更改而不是组件挂载，您将需要实现类似 useDidUpdate 的东西来防止 useEffect 在挂载时调用。
 
 ```js
 const mounted = useRef(false);

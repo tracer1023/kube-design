@@ -68,8 +68,8 @@ By default hook will get types information from initialValues automatically.
 const q = useQueue({
   limit: 2,
   initialValues: [
-    { name: 'Bob', id: 1 },
-    { name: 'Alice', id: 2 },
+    { name: 'Elsa', id: 1 },
+    { name: 'Allen', id: 2 },
   ],
 });
 
@@ -84,7 +84,7 @@ const q = useQueue<{ name: string; id: number }>({
   initialValues: [],
 });
 
-q.add({ name: 'Bob', id: 1 });
+q.add({ name: 'Elsa', id: 1 });
 ```
 
 ## Definition

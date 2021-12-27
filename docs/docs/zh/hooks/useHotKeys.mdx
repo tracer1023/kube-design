@@ -1,0 +1,59 @@
+---
+group: 'hooks'
+category: 'state'
+title: useHotKeys
+description: '侦听文档元素上的组合键'
+order: 1
+---
+
+## 使用方法
+
+useHotKeys hook 接受一个带有热键和热键处理函数的数组:
+
+hotkey - 热键字符串例如ctrl+E、shift+alt+L、mod+S
+
+handler - 按下给定组合时调用的事件处理程序
+
+```js
+() => {
+  useHotkeys([
+    ['mod+J', () => toggleColorType()],
+    ['ctrl+K', () => search()],
+    ['mod+z', () => revoke()],
+  ]);
+  return null;
+}
+```
+
+## 定位要素
+
+useHotKeys 钩子只能与文档元素一起使用，如果您需要支持其他元素，则需要创建自己的事件侦听器。为此，getHotKeysHandler 函数应该导出，并且与 onKeyDown 一起使用。
+
+```js live=true
+() => {
+  const [value, setValue] = React.useState("I've just used a hotkey to send a message");
+  const handleSubmit = () => {
+     notify.success('Here is your success message.');
+  }
+
+  const handleSave = () => {
+     notify('Here is your Info.');
+  }
+
+  return (
+  <>
+     <Input
+       placeholder="Your message"
+       label="Press ⌘+Enter or Ctrl+Enter when input has focus to send message"
+       value={value}
+       onChange={(event) => setValue(event.target.value)}
+       onKeyDown={getHotkeyHandler([
+               ['mod+Enter', handleSubmit],
+               ['mod+S', handleSave],
+             ])}
+     />
+       <Notify position="top-right" />
+     </>
+   );
+}
+```

@@ -27,13 +27,13 @@ order: 1
 
 ## API
 
-Hook 接受三个参数：
+Hook 接受三个参数:
 
-- handler: 在外部点击时调用的函数。
+- `handler` – 在外部点击时调用的函数。
 
-- events: 指示外部点击的可选事件列表。
+- `events` – 指示外部点击的可选事件列表。
 
-- nodes: 不可以在点击事件之外触发的可选节点列表。
+- `nodes` - 不可以在点击事件之外触发的可选节点列表。
 
 Hook 返回 React ref 对象，该对象应传递给被捕获的外部点击的元素。
 
@@ -70,7 +70,7 @@ function Example() {
 
 ## 多个节点
 
-在某些情况下你希望为多个节点触发外部点击事件，比如，当门户网站当下拉列表渲染时。因此提供第三个参数，这个参数是一个数组，包含不应该触发外部点击事件。
+在某些情况下你希望为多个节点触发外部点击事件，比如，当门户网站下拉列表渲染。因此提供第三个参数，这个参数是一个数组，包含不应该触发外部点击事件。
 
 ```tsx
 function Demo() {
@@ -92,9 +92,9 @@ function Demo() {
 
 ## TypeScript
 
-## 定义
+### 定义
 
-```ts
+```tsx
 function useClickOutside<T extends HTMLElement = any>(
   handler: () => void,
   events?: string[] | null,
@@ -102,9 +102,9 @@ function useClickOutside<T extends HTMLElement = any>(
 ): React.MutableRefObject<T>;
 ```
 
-## Ref type
+### Ref 类型
 
-默认情况下 useClickOutside 会返回带有 React.MutableRefObject<any> 类型的 ref 对象，因为 ref 类型在几乎所有情况下都无关紧要。您可以通过传递类型来指定 ref 类型。
+因为 ref 类型几乎在所有情况下都无关紧要。你可以通过传递类型来指定 ref 类型。
 
 ```tsx
 const ref = useClickOutside<HTMLDivElement>(onClickOutside);

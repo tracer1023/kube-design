@@ -33,7 +33,7 @@ Use hook to debounce value change. This can be useful in case you want to perfor
 
 ## Leading update
 
-You can remove immediately update value with first call with { leading: true } options:
+useDebouncedValue is divided into immediate execution and non-immediate execution.You can remove immediately update value with first call with { leading: true } options:
 
 ```js live=true
 ()  => {
@@ -75,7 +75,7 @@ In this example, type in some text and click cancel button within a minute to ca
         style={{ flex: 1 }}
         onChange={(event) => setValue(event.currentTarget.value)}
       />
-      <Button onClick={cancel} size="xs" style={{ marginLeft: 15 }}>
+      <Button onClick={cancel} size="xs" style={{ marginTop: 10 }}>
         Cancel
       </Button>
 

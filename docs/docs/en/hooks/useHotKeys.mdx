@@ -1,0 +1,57 @@
+---
+group: 'hooks'
+category: 'state'
+title: useHotkeys
+description: 'Listen for keys combinations on document element'
+order: 1
+---
+
+## Usage
+
+Hook accepts an array with hotkey and handler tuples:
+
+hotkey - hotkey string e.g. ctrl+E, shift+alt+L, mod+S
+
+handler - event handler called when given combination was pressed
+
+```js
+() => {
+  useHotkeys([
+    ['mod+J', () => toggleColorType()],
+    ['ctrl+K', () => search()],
+    ['mod+z', () => revoke()],
+  ]);
+  return null;
+}
+```
+
+## Targeting elements
+
+useHotkeys hook can work only with document element, you will need to create your own event listener if you need to support other elements. For this purpose package exports getHotkeysHandler function which should be used with onKeyDown:
+
+```js live=true
+() => {
+  const [value, setValue] = React.useState("I've just used a hotkey to send a message");
+  const handleSubmit = () =>
+     notify.success('Here is your success message.');
+
+  const handleSave = () =>
+     notify('Here is your Info.');
+
+  return (
+     <>
+        <Input
+          placeholder="Your message"
+          label="Press ⌘+Enter or Ctrl+Enter when input has focus to send message"
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          onKeyDown={getHotkeyHandler([
+               ['mod+Enter', handleSubmit],
+               ['mod+S', handleSave],
+             ])}
+        />
+          <Notify position="top-right" />
+     </>
+   );
+}
+```

@@ -16,7 +16,7 @@ useClipboard hook 提供了使用 navigator.clipboard 的接口。
 
   return (
     <Button
-      color={clipboard.copied ? 'teal' : 'blue'}
+      color={clipboard.copied ? 'red' : 'blue'}
       onClick={() => clipboard.copy('Hello, world!')}
     >
       {clipboard.copied ? 'Copied' : 'Copy'}
