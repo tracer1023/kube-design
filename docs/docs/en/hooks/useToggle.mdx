@@ -1,0 +1,64 @@
+---
+group: 'hooks'
+category: 'state'
+title: useToggle
+description: 'Switch between two states'
+order: 1
+---
+
+## Usage
+
+Hook implements common state pattern – it switches state between two given values:
+
+When the status value is boolean type, useBooleanToggle can be used.
+
+```js live=true
+() => {
+  const [value, toggle] = useToggle('blue', ['blue', 'orange']);
+  return (
+    <Button color={value} onClick={() => toggle()}>
+      {value}
+    </Button>
+  );
+}
+```
+
+## API
+
+useToggle hook accepts two arguments:
+
+- initialValue – initial state
+
+- options – an array with 2 elements, must include initial value
+
+useToggle hook returns an array with state value and toggle function:
+
+```tsx
+const [value, toggle] = useToggle('primary', ['secondary', 'primary']);
+
+toggle(); // -> value == 'secondary'
+toggle(); // -> value == 'primary'
+
+// You can force specific value, in this case state will be set to given value
+toggle('primary'); // -> value == 'primary'
+```
+## TypeScript
+
+## Set type
+
+By default TypeScript will guess your type, but in most cases it's better to set type manually:
+
+```tsx
+const [value, toggle] = useToggle('primary', ['secondary', 'primary']); // value is string
+const [value, toggle] = useToggle<'primary' | 'secondary'>('primary', ['secondary', 'primary']); // value is 'dark' | 'light'
+```
+
+## Definition
+
+```tsx
+function useToggle<T>(
+  initialValue: T,
+  options: [T, T]
+): readonly [T, (value?: React.SetStateAction<T>) => void];
+```
+

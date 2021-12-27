@@ -1,0 +1,48 @@
+---
+group: 'hooks'
+category: 'state'
+title: useMergedRef
+description: '对一个 dom 节点使用多个 ref 引用'
+order: 1
+---
+
+## 使用方法
+
+useMergedRef hook 接受任意数量的 refs 并返回应该传递给 dom 节点的函数。当您需要在单个 dom 节点上使用多个 ref 时使用钩子，例如，当您想使用 useClickOutside hooks 并为自己获取一个 ref 时：
+
+```js
+() => {
+  const myRef = useRef();
+  const useClickOutsideRef = useClickOutsideRef(()=> {});
+  const mergedRef = useMergedRef(myRef, useClickOutSide);
+  return <div ref={mergeRef} />
+}
+```
+
+## mergeRefs 方法
+
+useMergedRef hook 使用 useCallback 钩子记忆 refs，但在某些情况下记忆不是有效的策略，例如，当您使用动态组件列表时，React 会抱怨在两个渲染中调用了不同数量的钩子。要解决该问题，请改用 mergeRefs 函数：
+
+```js
+() => {
+  const myRef = useRef();
+  const useClickOutsideRef = useClickOutside(()=>{});
+  const mergedRef = mergeRefs(myRef, useClickOutsideRef);
+  return <div ref={mergedRef}/>
+}
+```
+
+mergeRefs 的工作方式与 useMergedRef 相同，但在内部不使用钩子。仅当您不能使用 useMergedRef 时才使用它。
+
+## 定义
+
+```ts
+function useMergedRef<T = any>(...refs: React.ForwardedRef<T>[]): (node : T) => void;
+```
+
+## 设置节点类型
+
+```ts
+useMergedRef<HTMLDivElement>();
+```
+

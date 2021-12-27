@@ -1,0 +1,44 @@
+---
+group: 'hooks'
+category: 'state'
+title: useUnmount
+description: 'A hook that executes the function right before the component is unmounted.'
+order: 1
+---
+
+## Usage
+
+The function is called right before the component is unmounted.
+
+```js
+const MyComponent = () => {
+  useUnmount(() => {
+    notify.success('unmount');
+  });
+  return <p>Hello World!</p>;
+};
+
+export default () => {
+  const [state, { toggle }] = useBoolean(true);
+  return (
+    <>
+      <button type="button" onClick={toggle}>
+        {state ? 'unmount' : 'mount'}
+      </button>
+      {state && <MyComponent />}
+    </>
+  );
+};
+```
+
+## API
+
+useUnmount hook accept one argument of as an execute function
+fn - The function to be executed.
+
+## Definition
+
+```tsx
+useUnmount(fn:() => void);
+```
+

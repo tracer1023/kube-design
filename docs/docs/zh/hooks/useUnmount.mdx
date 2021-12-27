@@ -1,0 +1,45 @@
+---
+group: 'hooks'
+category: 'state'
+title: useUnmount
+description: '在卸载组件之前执行函数的钩子.'
+order: 1
+---
+
+## 基本用法
+
+在卸载组件之前调用该函数。
+
+```js
+const MyComponent = () => {
+  useUnmount(() => {
+    notify.success('unmount');
+  });
+  return <p>Hello World!</p>;
+};
+
+export default () => {
+  const [state, { toggle }] = useBoolean(true);
+  return (
+    <>
+      <button type="button" onClick={toggle}>
+        {state ? 'unmount' : 'mount'}
+      </button>
+      {state && <MyComponent />}
+    </>
+  );
+};
+```
+
+## API
+
+useUnmount hook 接受一个执行函数作为参数
+
+fn - 执行函数.
+
+## 定义
+
+```tsx
+useUnmount(fn:() => void);
+```
+

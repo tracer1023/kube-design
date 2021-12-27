@@ -1,0 +1,43 @@
+---
+group: 'hooks'
+category: 'state'
+title: useScrollLock
+description: '在当前位置锁定滚动'
+order: 1
+---
+
+## 使用方法
+
+useScrollLock 通过设置 document.body 溢出时 为hidden 来锁定当前位置的滚动。
+
+```ts live=true
+() => {
+  const { Unlock, Lock } = KubeIcon;
+  const [scrollLocked, setScrollLocked] = useScrollLock();
+
+  return (
+    <Center>
+      <Button
+        onClick={() => setScrollLocked((c) => !c)}
+        variant="outline"
+        leftIcon={scrollLocked ? <Unlock /> : <Lock />}
+      >
+        {scrollLocked ? 'Unlock scroll' : 'Lock scroll'}
+      </Button>
+    </Center>
+  );
+}
+```
+
+## 滚动条偏移
+
+在某些操作系统中，当滚动被锁定时，useScrollLock 添加 padding-right 等于 body 元素上滚动条的宽度，导航栏的宽度可以被抵销。但是，如果您使用具有固定位置的元素，则需要手动添加右填充：padding-right: var(--removed-scroll-width, 0px))。
+
+## 定义
+
+```ts
+function useScrollLock<T extends HTMLElement = HTMLDivElement>(
+  lock?: boolean,
+  options?: { disableBodyPadding?: boolean }
+): readonly [boolean, Dispatch<SetStateAction<boolean>>];
+```

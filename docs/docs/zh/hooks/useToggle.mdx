@@ -1,0 +1,64 @@
+---
+group: 'hooks'
+category: 'state'
+title: useToggle
+description: '两个状态之间切换'
+order: 1
+---
+
+## 使用方法
+
+useToggle 实现了通用状态模式--它在两个给定值之间切换状态。
+
+当状态值是 boolean 类型时，可以使用 useBooleanToggle hook。
+
+```js live=true
+() => {
+  const [value, toggle] = useToggle('primary', ['primary', 'secondary']);
+  return (
+    <Button color={value} onClick={() => toggle()}>
+      {value}
+    </Button>
+  );
+}
+```
+
+## API
+
+useToggle 接受两个参数：
+
+- initialValue：初始值
+
+- options：一个数组包含两个元素，必须包含初始值。
+
+useToggle 返回一个包含状态值和触发函数的数组。
+
+```tsx
+const [value, toggle] = useToggle('primary', ['secondary', 'primary']);
+
+toggle(); // -> value == 'secondary'
+toggle(); // -> value == 'primary'
+
+// You can force specific value, in this case state will be set to given value
+toggle('primary'); // -> value == 'primary'
+```
+## TypeScript
+
+## 设置类型
+
+默认情况下，TypeScript 会猜测 useToggle 的参数类型，但在大多数情况下，最好手动设置类型。
+
+```tsx
+const [value, toggle] = useToggle('primary', ['secondary', 'primary']); // value is string
+const [value, toggle] = useToggle<'primary' | 'secondary'>('primary', ['secondary', 'primary']); // value is 'dark' | 'light'
+```
+
+## 定义
+
+```tsx
+function useToggle<T>(
+  initialValue: T,
+  options: [T, T]
+): readonly [T, (value?: React.SetStateAction<T>) => void];
+```
+

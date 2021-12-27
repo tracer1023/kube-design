@@ -1,0 +1,31 @@
+---
+group: 'hooks'
+category: 'state'
+title: useDidMount
+description: 'A hook that executes a function after the component is mounted.'
+order: 1
+---
+
+## Usage
+
+The function is called right after the component is mounted.The useEffect calls the execution function when no dependency is passed in.
+
+```js
+  useEffect(() => {
+    if (typeof callback === 'function') {
+      fn();
+    }
+  }, []);
+```
+
+useDidMount uses the same logic:
+
+```js
+useDidMount(() => console.log('component is mounted'));
+```
+
+## Definition
+
+```js
+function useDidMount(fn:() => void) : void;
+```

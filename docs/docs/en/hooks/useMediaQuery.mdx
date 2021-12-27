@@ -1,0 +1,26 @@
+---
+group: 'hooks'
+category: 'state'
+title: unMediaQuery
+description: 'Subscribe to media queries with window.matchMedia'
+order: 1
+---
+
+## Usgae
+
+useMediaQuery hook allows to subscribe to media queries. It receives media query as an argument and returns true if given media query matches current state. Hook relies on window.matchMedia() API and will always return false if api is not available (e.g. during server side rendering).
+
+Hook takes media query as first argument and returns true if query is satisfied. Resize browser window to trigger window.matchMedia event:
+
+```js live=true
+function Demo() {
+  const matches = useMediaQuery('(min-width: 900px)');
+
+  return (
+    <Badge color={matches ? 'blue' : 'red'} variant="filled">
+      Breakpoint {matches ? 'matches' : 'does not match'}
+    </Badge>
+  );
+}
+```
+

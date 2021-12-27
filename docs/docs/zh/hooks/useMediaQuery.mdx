@@ -1,0 +1,26 @@
+---
+group: 'hooks'
+category: 'state'
+title: useMediaQuery
+description: '使用 window.matchMedia 订阅媒体查询'
+order: 1
+---
+
+## 使用方法
+
+使用 useMediaQuery Hook 允许订阅媒体查询。它接收媒体查询作为参数，如果给定的媒体查询与当前状态匹配，则返回 true。 Hook 依赖于 window.matchMedia() API，如果 api 不可用（例如在服务器端渲染期间），它将始终返回 false。
+
+Hook 将媒体查询作为第一个参数，如果满足查询则返回 true。调整浏览器窗口大小以触发 window.matchMedia 事件。
+
+```js live=true
+function Demo() {
+  const matches = useMediaQuery('(min-width: 900px)');
+
+  return (
+    <Badge color={matches ? 'blue' : 'red'} variant="filled">
+      Breakpoint {matches ? 'matches' : 'does not match'}
+    </Badge>
+  );
+}
+```
+

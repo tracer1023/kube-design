@@ -1,0 +1,35 @@
+---
+group: 'hooks'
+category: 'state'
+title: usePrevious
+description: 'Can be used to store props or previous state'
+order: 1
+---
+
+## Usage
+
+usePrevious hook can be used to store props or previous state
+
+```js live=true
+() => {
+  const [value, setValue] = React.useState(0);
+
+  const lastValue = usePrevious(value);
+  return (
+    <div>
+      <p>Current: {value} - previous:{lastValue}</p>
+      <Button onClick={()=>setValue(value+1)}>Increment number</Button>
+    </div>
+  )
+}
+```
+
+## API
+
+usePrevious hook accepts a value of any type as a parameter。
+
+## Definition
+
+```ts
+usePrevious<T>(value: T)
+```

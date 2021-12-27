@@ -1,0 +1,49 @@
+---
+group: 'hooks'
+category: 'state'
+title: useClipboard
+description: '带有反馈超时的 navigator.clipboard 包装器'
+order: 1
+---
+
+## 使用方法
+
+useClipboard hook 提供了使用 navigator.clipboard 的接口。
+
+```js live=true
+() => {
+  const clipboard = useClipboard({ timeout: 500 });
+
+  return (
+    <Button
+      color={clipboard.copied ? 'teal' : 'blue'}
+      onClick={() => clipboard.copy('Hello, world!')}
+    >
+      {clipboard.copied ? 'Copied' : 'Copy'}
+    </Button>
+  );
+}
+```
+
+## API
+
+useClipboard hook 接受一个参数选项，其中定义了复制状态超时持续时间（默认为 2000）。 Hook 返回具有属性的对象：
+
+copy – 将值复制到剪贴板的函数
+
+copied – 指示复制处理程序的调用时间少于 options.timeout 毫秒前的值
+
+reset – 清除超时和重置的函数复制到false
+
+error – 如果出现问题，则包含 Error 对象
+
+## 定义
+
+```tsx
+function useClipboard(options: { timeout: number } = { timeout: 2000 }): {
+  copy: (valueToCopy: any) => void;
+  reset: () => void;
+  error: Error;
+  copied: boolean;
+};
+```

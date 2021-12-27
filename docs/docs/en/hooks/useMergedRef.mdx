@@ -1,0 +1,48 @@
+---
+group: 'hooks'
+category: 'state'
+title: useMergedRef
+description: 'Use multiple refs for one dom node'
+order: 1
+---
+
+## Usage
+
+Hook accepts any amount of refs and returns function that should be passed to dom node. Use hook when you need to use more than one ref on single dom node, for example, when you want to use use-click-outside hooks and also get a ref for yourself:
+
+```js
+() => {
+  const myRef = useRef();
+  const useClickOutsideRef = useClickOutsideRef(()=> {});
+  const mergedRef = useMergedRef(myRef, useClickOutSide);
+  return <div ref={mergeRef} />
+}
+```
+
+## mergeRefs function
+
+useMergedRef hooks memoizes refs with useCallback hook, but in some cases memoizing is not a valid strategy, for example, when you are working with a list of dynamic components React will complain that different amount of hooks was called across two renders. To fix that issue use mergeRefs function instead:
+
+```js
+() => {
+  const myRef = useRef();
+  const useClickOutsideRef = useClickOutside(()=>{});
+  const mergedRef = mergeRefs(myRef, useClickOutsideRef);
+  return <div ref={mergedRef}/>
+}
+```
+
+mergeRefs works the same way as useMergedRef but does not use hooks internally. Use it only when you cannot use useMergedRef.
+
+## Definition
+
+```ts
+function useMergedRef<T = any>(...refs: React.ForwardedRef<T>[]): (node : T) => void;
+```
+
+## Set node type
+
+```ts
+useMergedRef<HTMLDivElement>();
+```
+
