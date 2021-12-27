@@ -1,0 +1,51 @@
+---
+group: 'components'
+category: 'state'
+title: ActionConfirm
+description: '操作确认框.'
+order: 1
+---
+
+## 基础用法
+
+目标元素当操作需要用户进一步当确认时，弹出提示，询问用户，可以取消和确认操作。
+
+通过 ActionConfirm 可以设置确认后的加载效果；
+
+通过 visible 可以设置确认条是否隐藏；
+
+通过 onOk 可以传入确认的执行函数。
+
+设置 okText 和 cancelText 参数来自定义按钮的标签。
+
+```js live=true
+() => {
+  const [visible, setVisible] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleOk = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setVisible(false);
+    }, 1000);
+  };
+
+  return (
+     <div style={{
+        position: 'relative',
+        width: 700,
+        height: 500,
+        overflow: 'hidden',
+     }}>
+     <Button onClick={() => setVisible(!visible)}>Toggle Visible</Button>
+     <ActionConfirm
+        visible={visible}
+        okText={<span>确认</span>}
+        cancelText={<span>取消</span>}
+        confirmLoading={loading}
+        onOk={handleOk} />
+    </div>
+  );
+}
+```

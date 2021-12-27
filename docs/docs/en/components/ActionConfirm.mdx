@@ -1,0 +1,52 @@
+---
+group: 'components'
+category: 'state'
+title: ActionConfirm
+description: 'Action confirm.'
+order: 1
+---
+
+## Usage
+
+A simple and compact dialog used for asking for user confirmation.
+
+Set ActionConfirm props to set loading effect after confirm.
+
+Set onOk props to execute confirm function.
+
+Set visible props to set the visible of ActionConfirm.
+
+Set okText and cancelText props to customize the button's labels.
+
+```js live=true
+() => {
+  const [visible, setVisible] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleOk = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setVisible(false);
+    }, 1000);
+  };
+
+  return (
+     <div style={{
+        position: 'relative',
+        width: 700,
+        height: 500,
+        overflow: 'hidden',
+     }}>
+        <Button onClick={() => setVisible(!visible)}>Toggle Visible</Button>
+        <ActionConfirm
+           visible={visible}
+           okText={<span>确认</span>}
+           cancelText={<span>取消</span>}
+           confirmLoading={loading}
+           onOk={handleOk} />
+        </div>
+    </div>
+  );
+}
+```
