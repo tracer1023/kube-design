@@ -20,6 +20,7 @@ export default {
         'Button',
         'Text',
         'ActionConfirm',
+        'ConfigProvider',
         // 'Icon'
       ],
     },
@@ -31,6 +32,7 @@ export default {
         'AutoComplete',
         'Input',
         'InputNumber',
+        'FilterInput',
         'Radio',
         'Select',
         'Slider',

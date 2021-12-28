@@ -1,0 +1,67 @@
+---
+group: 'components'
+category: 'state'
+title: ConfigProvider
+description: '为组件提供统一的全局化配置'
+order: 1
+---
+
+## 使用方法
+
+ConfigProvider 使用 React 的context 特效，只需要在应用外围包裹一次就可以全局生效。
+
+## 设置语言
+
+通过 lcoale 可以全局化配置语言类型。
+
+通过 extendLocales 可以配置继承词条的语言类型，如 Empty，Modal 的词条语言类型。
+
+```js live=true
+() => {
+  const [locale, setLocale] = React.useState('en');
+  const changeLocale = (val) => {
+     setLocale(val);
+  }
+  return (
+     <>
+       <RadioGroup onChange={changeLocale} defaultValue={locale}>
+        <Radio label="英文" value="en"/>
+        <Radio label="中文" value="zh"/>
+       </RadioGroup>
+       <KubedConfigProvider locale={locale} extendLocales='zh'>
+          <DatePicker />
+          <Empty />
+          <Button>primary</Button>
+       </KubedConfigProvider>
+     </>
+  )
+}
+```
+
+## 设置主题颜色
+
+通过 themeType 可以全局化配置颜色主题
+
+通过 themes 可以配置 Kube 的颜色体系中的颜色类型
+
+```js live=true
+() => {
+  const [themeType, setThemeType] = React.useState('dark');
+  const changeThemeType = (val) => {
+     setThemeType(val);
+  }
+  return (
+     <>
+       <RadioGroup onChange={changeThemeType} defaultValue={themeType}>
+        <Radio label="暗色主题" value="dark"/>
+        <Radio label="亮色主题" value="light"/>
+       </RadioGroup>
+       <KubedConfigProvider themeType={themeType} themes={useTheme}>
+          <DatePicker />
+          <Empty />
+          <Button>primary</Button>
+       </KubedConfigProvider>
+     </>
+  )
+}
+```

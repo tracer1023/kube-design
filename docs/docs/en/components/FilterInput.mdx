@@ -1,0 +1,86 @@
+---
+group: 'components'
+category: 'state'
+title: FilterInput
+description: 'Filter input'
+order: 1
+---
+
+## Usage
+
+The filter input is used in some scenarios where the input results are clearly classified, and the query conditions are entered according to the different types selected.
+
+Using suggestions to set the data source.
+
+Using filters to set the filter condition parameters.
+
+Using onChange to update the filter condition.
+
+```js live=true
+() => {
+const suggestions = [
+  { label: '主机', key: 'instance' },
+  {
+    label: '状态',
+    key: 'status',
+    options: [
+      { label: '运行中', key: true },
+      { label: '已关闭', key: false },
+    ],
+  },
+  {
+    label: '系统',
+    key: 'system',
+    options: [
+      { label: 'Debian', key: 'debian' },
+      { label: 'Centos', key: 'centos' },
+      { label: 'Ubuntu', key: 'ubuntu' },
+      { label: 'Windows', key: 'windows' },
+    ],
+  },
+  {
+    label: '配置',
+    key: 'instanceType',
+    options: [
+      { label: '1 核 / 512 MB / 20 GB 存储', key: 0 },
+      { label: '2 核 / 1 GB / 20 GB 存储', key: 1 },
+    ],
+  },
+  { label: '项目', key: 'project' },
+];
+  const [filters, setFilters] = React.useState({ system: 'debian', instanceType: 1 });
+  const handleChange = (data) => {
+     console.log(data);
+     setFilters(data);
+  };
+  return (
+     <FilterInput
+        suggestions={suggestions}
+        filters={filters}
+        placeholder="Search.."
+        onChange={handleChange}
+      />
+    );
+}
+```
+
+## Simple mode
+
+The simple mode search box can be set through simpleMode, which supports a single condition search. When simpleMode is not set, the above standard mode is defaulted.
+
+```js live=true
+() => {
+  const handleChange = (data) => {
+    console.log(data);
+  };
+  return (
+    <FilterInput
+      placeholder="Search.."
+      onInputChange={handleChange}
+      onChange={handleChange}
+      simpleMode
+      initialKeyword="test"
+    />
+  );
+}
+```

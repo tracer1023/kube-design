@@ -1,0 +1,68 @@
+---
+group: 'components'
+category: 'state'
+title: ConfigProvider
+description: 'ConfigProvider provides a uniform configuration support for components.'
+order: 1
+---
+
+## Usage
+
+This component provides a configuration to all React components underneath itself via the context API. In the render tree all components will have access to the provided config.
+
+## Set locale
+
+Using locale to set the global language type.
+
+Using extendLocales to set the lauguage type
+
+Using extendLocales to set the language type of component, such as Empty and Modal's language type.
+
+```js live=true
+
+() => {
+  const [locale, setLocale] = React.useState('en');
+  const changeLocale = (val) => {
+     setLocale(val);
+  }
+  return (
+     <>
+       <RadioGroup onChange={changeLocale} defaultValue={locale}>
+        <Radio label="English" value="en"/>
+        <Radio label="Chinese" value="zh"/>
+       </RadioGroup>
+       <KubedConfigProvider locale={locale} extendLocales='zh'>
+          <DatePicker />
+          <Empty />
+       </KubedConfigProvider>
+     </>
+  )
+}
+```
+
+## Set theme type
+
+Using themeType to set global color theme.
+
+Using themes to set color type in Kube's color system.
+
+```js live=true
+() => {
+  const [themeType, setThemeType] = React.useState('dark');
+  const changeThemeType = (val) => {
+     setThemeType(val);
+  }
+  return (
+     <>
+       <RadioGroup onChange={changeThemeType} defaultValue={themeType}>
+        <Radio label="dark" value="dark"/>
+        <Radio label="light" value="light"/>
+       </RadioGroup>
+       <KubedConfigProvider themeType={themeType}>
+          <DatePicker />
+          <Empty />
+       </KubedConfigProvider>
+     </>
+  )
+}
+```

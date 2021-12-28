@@ -1,0 +1,86 @@
+---
+group: 'components'
+category: 'state'
+title: FilterInput
+description: '过滤输入框'
+order: 1
+---
+
+## 使用方法
+
+过滤输入框用于一些对输入结果有明确分类的场景，根据选择的不同类型输入查询条件。
+
+通过 suggestions 配置数据源；
+
+通过 filters 属性设置过滤条件参数；
+
+通过 onChange 属性设置过滤条件的执行方法。
+
+```js live=true
+() => {
+const suggestions = [
+  { label: '主机', key: 'instance' },
+  {
+    label: '状态',
+    key: 'status',
+    options: [
+      { label: '运行中', key: true },
+      { label: '已关闭', key: false },
+    ],
+  },
+  {
+    label: '系统',
+    key: 'system',
+    options: [
+      { label: 'Debian', key: 'debian' },
+      { label: 'Centos', key: 'centos' },
+      { label: 'Ubuntu', key: 'ubuntu' },
+      { label: 'Windows', key: 'windows' },
+    ],
+  },
+  {
+    label: '配置',
+    key: 'instanceType',
+    options: [
+      { label: '1 核 / 512 MB / 20 GB 存储', key: 0 },
+      { label: '2 核 / 1 GB / 20 GB 存储', key: 1 },
+    ],
+  },
+  { label: '项目', key: 'project' },
+];
+  const [filters, setFilters] = React.useState({ system: 'debian', instanceType: 1 });
+  const handleChange = (data) => {
+     console.log(data);
+     setFilters(data);
+  };
+  return (
+     <FilterInput
+        suggestions={suggestions}
+        filters={filters}
+        placeholder="Search.."
+        onChange={handleChange}
+      />
+    );
+}
+```
+
+## 简易模式
+
+通过 simpleMode 可以设置简易模式搜索框，支持单个条件的搜索。不设置 simpleMode 时默认是上述标准模式。
+
+```js live=true
+() => {
+  const handleChange = (data) => {
+    console.log(data);
+  };
+  return (
+    <FilterInput
+      placeholder="Search.."
+      onInputChange={handleChange}
+      onChange={handleChange}
+      simpleMode
+      initialKeyword="test"
+    />
+  );
+}
+```
