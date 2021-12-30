@@ -31,4 +31,4 @@ export function KubedConfigProvider({
   );
 }
 
-KubedConfigProvider.displayName = '@kubed/ConfigProvider';
+KubedConfigProvider.displayName = '@kubed/components/KubedConfigProvider';

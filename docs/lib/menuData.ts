@@ -20,7 +20,7 @@ export default {
         'Button',
         'Text',
         'ActionConfirm',
-        'ConfigProvider',
+        'KubedConfigProvider',
         // 'Icon'
       ],
     },
