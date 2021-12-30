@@ -8,23 +8,68 @@ order: 1
 
 ## 基础用法
 
-表单控件，用于创建一个实体或收集信息，需要对输入对数据类型进行校验时。
+表单控件，用于创建一个实体或收集信息，需要对输入的数据类型进行校验时。
 
 基本的表单数据域控制展示，包含布局、初始化、验证、提交。
 
-From 组件通过 layout 属性来布局，可选值为 vertical / horizontal / inline .
+```js live=true
+() => {
+   const onFinish = (values) => {
+    console.log('success', values);
+  };
 
-Form 组件与 FormItem 搭配使用。
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed', errorInfo)
+  }
 
-Form 组件通过 labelAlign 属性可以控制 label 的排列对齐方式。
+  return (
+    <Form
+      labelCol={{ span: 4 }}
+      wrapperCol={{ span: 20 }}
+      initialValues={{ remember: true }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      autoComplete="off"
+      layout="horizontal"
+    >
+      <FormItem
+        name="account"
+        label="Account"
+        help="please enter your account"
+        rules={[{ required: true, message: 'Please input your account!' }]}
+        tooltip="please enter your account">
+        <Input />
+      </FormItem>
+      <FormItem
+        name="password"
+        label="Password"
+        help="Password"
+        tooltip="please enter your password"
+        rules={[{ required: true, message: 'Please input your name!' }]}
+      >
+         <InputPassword placeholder="Password"/>
+      </FormItem>
+      <FormItem wrapperCol={{ offset: 8, span: 16 }}>
+        <Button color="primary" htmlType="submit">
+           Submit
+        </Button>
+      </FormItem>
+    </Form>
+  )
+}
+```
 
-Form 组件通过 size 属性可以控制表格的尺寸。
+## 表单布局
 
-Form 组件通过 initialValue 可以设定表格的初始值。
+From 组件通过 layout 属性来布局，可选值为 水平排列（vertical） / 垂直排列（horizontal） / 行内排列（inline）。
 
-Form 组件通过 labelCol 和 wrapperCol 设定表格占据的宽度。
+Form 组件与 FormItem 搭配使用：
 
-FromItem 组件通过 rules 可以设定表单的校验规则。
+- Form 组件通过 labelAlign 属性可以控制 label 的排列对齐方式。
+- Form 组件通过 size 属性可以控制表格的尺寸。
+- Form 组件通过 initialValue 可以设定表格的初始值。
+- Form 组件通过 labelCol 和 wrapperCol 设定表格占据的宽度。
+- FromItem 组件通过 rules 可以设定表单的校验规则。
 
 ```js live=true
 () => {
@@ -38,12 +83,20 @@ FromItem 组件通过 rules 可以设定表单的校验规则。
   };
 
   const onFinish = (values) => {
-    console.log(values);
+    console.log('success', values);
   };
 
+  const onChange = (val) => {
+    console.log('val', val)
+  }
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed', errorInfo)
+  }
+
   const layoutCol = {
-     labelCol: { span: 8 },
-     wrapperCol: { span: 16 },
+     labelCol: { span: 4 },
+     wrapperCol: { span: 20 },
    };
 
   return (
@@ -58,9 +111,10 @@ FromItem 组件通过 rules 可以设定表单的校验规则。
         layout={formLayout}
         form={form}
         size="lg"
-        labelAlign="left"
+        labelAlign="right"
         initialValues={{ account: 'wayne' }}
         onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
       >
         <FormItem
           name="account"
@@ -71,35 +125,65 @@ FromItem 组件通过 rules 可以设定表单的校验规则。
         <Input />
         </FormItem>
         <FormItem
-          name="name"
-          label="Name"
-          help="please enter your name"
-          rules={[{ required: true, message: 'Please input your name!' }]}
-          tooltip="your name"
-        >
-          <Input placeholder="Name"/>
-        </FormItem>
-        <FormItem
           name="password"
           label="Password"
           help="Password"
           tooltip="please enter your password"
           rules={[{ required: true, message: 'Please input your name!' }]}
         >
-          <Input type="Password" placeholder="Password"/>
+          <InputPassword placeholder="Password"/>
+        </FormItem>
+        <FormItem>
+          <Button onClick={getFieldData} size="xs">
+             Submit
+          </Button>
         </FormItem>
       </Form>
-      <Button onClick={getFieldData}>
-         Submit
-      </Button>
     </>
   );
 };
 ```
 
-## 动态表单
+## 表单尺寸
 
-可以新增表单项格数，自定义表单项的输入内容
+```ts live=true
+() => {
+  const [componentSize, setComponentSize] = React.useState('xs');
+  const onFormSizeChange = (size) => {
+     console.log('size', size);
+     setComponentSize(size);
+  };
+  const [form] = useForm();
+  return (
+    <>
+      <RadioGroup onChange={onFormSizeChange} defaultValue={componentSize}>
+        <Radio value="xs" label="xs" />
+        <Radio value="sm" label="sm" />
+        <Radio value="md" label="md" />
+        <Radio value="lg" label="lg" />
+        <Radio value="xl" label="xl" />
+      </RadioGroup>
+      <Form layout="horizontal" size={componentSize} form={form}>
+        <FormItem label="Input">
+          <Input placeholder="please input some text..." />
+        </FormItem>
+        <FormItem label="InputNumber">
+          <InputNumber />
+        </FormItem>
+        <FormItem label="button">
+          <Button color="primary" variant="filled" radius="xl">
+            按钮
+          </Button>
+        </FormItem>
+      </Form>
+    </>
+  );
+}
+```
+
+## 动态增减嵌套字段
+
+嵌套表单字段需要对 field 进行拓展，将 field.name 应用于控制字段。
 
 ```js live=true
 () => {
@@ -141,8 +225,8 @@ FromItem 组件通过 rules 可以设定表单的校验规则。
                   </FormItem>
                 </Col>
                 <Col span={1}>
-                  <Button variant="text" onClick={() => remove(name)}>
-                    <Trash size={16} />
+                  <Button variant="text" onClick={() => remove(name)} leftIcon={<Trash size={16} />}>
+                    增加
                   </Button>
                 </Col>
               </Row>
@@ -157,9 +241,9 @@ FromItem 组件通过 rules 可以设定表单的校验规则。
           </>
         )}
       </FormList>
-      <button type="button" onClick={getFieldErrors}>
+      <Button type="button" onClick={getFieldErrors}>
         Submit
-      </button>
+      </Button>
     </Form>
   );
 }

@@ -12,7 +12,7 @@ import {
 } from './Input.styles';
 
 export function fixControlledValue<T>(value: T) {
-  if (typeof value === 'undefined' || value === null) {
+  if (typeof value === 'undefined' || value === null || Object.keys(value).length === 0) {
     return '';
   }
   return value;

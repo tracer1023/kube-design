@@ -58,7 +58,6 @@ function getDeclarationsList(paths: DeclarationPath[]): string[] {
 
 function prepareDeclaration(declaration: ComponentDoc) {
   const data = { ...declaration };
-  // console.log('declaration-111', declaration);
   delete data.tags;
   delete data.methods;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import RcInputNumber, { InputNumberProps as RcInputNumberProps } from 'rc-input-number';
 import styled from 'styled-components';
 import { ChevronUp, ChevronDown } from '@kubed/icons';
-import { DefaultProps } from '../theme';
+import { DefaultProps, KubedSizes } from '../theme';
 import forwardRef from '../utils/forwardRef';
 import { addColorAlpha } from '../utils/color';
 
@@ -11,7 +11,7 @@ const StyledInputNumber = styled(RcInputNumber)<RcInputNumberProps>`
   width: ${({ width }) => (width ? `${width}px` : '90px')};
   position: relative;
   border-radius: 3px;
-  height: 32px;
+  height: ${({ size, theme }) => theme.layout.inputSizes[size]};
   line-height: 1.67;
   padding: 6px 18px 6px 12px;
   border: 1px solid ${({ theme }) => theme.palette.accents_4};
@@ -93,6 +93,9 @@ export interface InputNumberProps extends DefaultProps {
 
   /** width of input */
   width?: number;
+
+  /** Predefined inputNumber size */
+  size?: KubedSizes;
 
   /** Minimal possible value */
   min?: ValueType;

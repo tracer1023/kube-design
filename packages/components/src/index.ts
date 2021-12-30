@@ -27,7 +27,7 @@ export { Input } from './Input/Input';
 export { InputPassword } from './InputPassword/InputPassword';
 export { FilterInput } from './FilterInput/FilterInput';
 export { Empty } from './Empty/Empty';
-export { useForm, FormLayout, FormItem, Form, FormList } from './Form/Form';
+export { useForm, FormItem, Form, FormList } from './Form/Form';
 export { Select } from './Select/Select';
 export { Modal, useModal } from './Modal';
 export { CheckboxGroup, Checkbox } from './Checkbox/Checkbox';

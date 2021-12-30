@@ -14,6 +14,57 @@ Basic Form data control. Includes layout, initial values, validation and submit.
 
 ```js live=true
 () => {
+   const onFinish = (values) => {
+    console.log('success', values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed', errorInfo)
+  }
+
+  return (
+    <Form
+      labelCol={{ span: 4 }}
+      wrapperCol={{ span: 20 }}
+      initialValues={{ remember: true }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      autoComplete="off"
+      layout="horizontal"
+    >
+      <FormItem
+        name="account"
+        label="Account"
+        help="please enter your account"
+        rules={[{ required: true, message: 'Please input your account!' }]}
+        tooltip="please enter your account">
+        <Input />
+      </FormItem>
+      <FormItem
+        name="password"
+        label="Password"
+        help="Password"
+        tooltip="please enter your password"
+        rules={[{ required: true, message: 'Please input your name!' }]}
+      >
+         <InputPassword placeholder="Password"/>
+      </FormItem>
+      <FormItem wrapperCol={{ offset: 8, span: 16 }}>
+        <Button color="primary" htmlType="submit">
+           Submit
+        </Button>
+      </FormItem>
+    </Form>
+  )
+}
+```
+
+## Form Layout
+
+There are three layout for form: horizontal, vertical, inline.
+
+```js live=true
+() => {
   const [form] = useForm();
   const [formLayout, setFormLayout] = React.useState('horizontal');
   const onRadioChange = (val) => {
@@ -24,12 +75,20 @@ Basic Form data control. Includes layout, initial values, validation and submit.
   };
 
   const onFinish = (values) => {
-    console.log(values);
+    console.log('success', values);
   };
 
+  const onChange = (val) => {
+    console.log('val', val)
+  }
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed', errorInfo)
+  }
+
   const layoutCol = {
-     labelCol: { span: 8 },
-     wrapperCol: { span: 16 },
+     labelCol: { span: 4 },
+     wrapperCol: { span: 20 },
    };
 
   return (
@@ -44,9 +103,10 @@ Basic Form data control. Includes layout, initial values, validation and submit.
         layout={formLayout}
         form={form}
         size="lg"
-        labelAlign="left"
+        labelAlign="right"
         initialValues={{ account: 'wayne' }}
         onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
       >
         <FormItem
           name="account"
@@ -57,35 +117,67 @@ Basic Form data control. Includes layout, initial values, validation and submit.
         <Input />
         </FormItem>
         <FormItem
-          name="name"
-          label="Name"
-          help="please enter your name"
-          rules={[{ required: true, message: 'Please input your name!' }]}
-          tooltip="your name"
-        >
-          <Input placeholder="Name"/>
-        </FormItem>
-        <FormItem
           name="password"
           label="Password"
           help="Password"
           tooltip="please enter your password"
           rules={[{ required: true, message: 'Please input your name!' }]}
         >
-          <Input type="Password" placeholder="Password"/>
+          <InputPassword placeholder="Password"/>
+        </FormItem>
+        <FormItem>
+          <Button onClick={getFieldData} size="xs">
+             Submit
+          </Button>
         </FormItem>
       </Form>
-      <Button onClick={getFieldData}>
-         Submit
-      </Button>
     </>
   );
 };
 ```
 
-## Dynamic Form
+## Form Size
 
-The dynamic form can add the number of form items and customize the input content of the form items.
+```ts live=true
+() => {
+  const [componentSize, setComponentSize] = React.useState('xs')
+  const onFormSizeChange = (size) => {
+    console.log('size',size)
+    setComponentSize(size)
+  }
+  const [form] = useForm();
+  return (
+    <>
+       <RadioGroup onChange={onFormSizeChange} defaultValue={componentSize}>
+          <Radio value="xs" label="xs" />
+          <Radio value="sm" label="sm" />
+          <Radio value="md" label="md" />
+          <Radio value="lg" label="lg" />
+          <Radio value="xl" label="xl" />
+       </RadioGroup>
+       <Form
+          layout="horizontal"
+          size={componentSize}
+          form={form}
+       >
+          <FormItem label="Input">
+             <Input placeholder="please input some text..." />
+          </FormItem>
+          <FormItem label="InputNumber">
+             <InputNumber />
+          </FormItem>
+          <FormItem label="button">
+             <Button color="primary" variant="filled" radius="xl">按钮</Button>
+          </FormItem>
+       </Form>
+    </>
+  )
+}
+```
+
+## Dynamic Form nest Items
+
+Nest dynamic field need extends field. Pass field.name to nest item.
 
 ```js live=true
 () => {
@@ -127,8 +219,8 @@ The dynamic form can add the number of form items and customize the input conten
                   </FormItem>
                 </Col>
                 <Col span={1}>
-                  <Button variant="text" onClick={() => remove(name)}>
-                    <Trash size={16} />
+                  <Button variant="text" onClick={() => remove(name)} leftIcon={<Trash size={16} />}>
+                    增加
                   </Button>
                 </Col>
               </Row>
@@ -143,9 +235,9 @@ The dynamic form can add the number of form items and customize the input conten
           </>
         )}
       </FormList>
-      <button type="button" onClick={getFieldErrors}>
+      <Button type="button" onClick={getFieldErrors}>
         Submit
-      </button>
+      </Button>
     </Form>
   );
 }
